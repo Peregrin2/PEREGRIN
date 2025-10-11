@@ -1,0 +1,50 @@
+#include <iostream>
+#include <thread>
+#include <chrono>
+#include <cstdlib>
+
+using namespace std;
+
+int main() {
+    cout << "Press Enter to start the traffic light simulation...";
+    if (cin.get() == '\n') {
+        system("cls");
+
+        while (true) {
+            // 🔴 RED LIGHT
+            cout << "\033[31mRED LIGHT!\033[0m" << endl;
+            this_thread::sleep_for(chrono::seconds(1));
+            system("cls");
+
+            for (int i = 1; i <= 3; i++) {
+                cout << "\033[31m( " << i << " )\033[0m" << endl;
+                this_thread::sleep_for(chrono::seconds(1));
+                system("cls");
+            }
+
+            // 🟢 GREEN LIGHT
+            cout << "\033[32mGO!\033[0m" << endl;
+            this_thread::sleep_for(chrono::seconds(1));
+            system("cls");
+
+            for (int j = 1; j <= 3; j++) {
+                cout << "\033[32m( " << j << " )\033[0m" << endl;
+                this_thread::sleep_for(chrono::seconds(1));
+                system("cls");
+            }
+
+            // 🟡 YELLOW LIGHT
+            cout << "\033[33mSLOW DOWN!\033[0m" << endl;
+            this_thread::sleep_for(chrono::seconds(1));
+            system("cls");
+
+            for (int k = 1; k <= 3; k++) {
+                cout << "\033[33m( " << k << " )\033[0m" << endl;
+                this_thread::sleep_for(chrono::seconds(1));
+                system("cls");
+            }
+        }
+    }
+
+    return 0;
+}
