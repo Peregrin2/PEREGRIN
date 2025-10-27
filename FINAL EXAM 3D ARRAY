@@ -6,7 +6,7 @@ int main() {
     int price[5] = {99, 99, 99, 78, 75};
     int order[5][5][3] = {0};
     int numOrdersArr[5] = {0};
-    int customer = 5, numOrders = 5;
+    int customer = 1, numOrders = 1;
     int totalPrice = 0, paid = 0, payment;
 
     for (int i = 0; i < customer; i++) {
@@ -19,13 +19,14 @@ int main() {
         for (int j = 0; j < numOrders; j++) {
             while (true) {
                 cout << "\n=== MENU ===" << endl;
-                cout << "[1]. Burger Steak Meal - 99" << endl;
-                cout << "[2]. Chickenjoy Meal - 99" << endl;
-                cout << "[3]. Jolly Spaghetti Meal - 99" << endl;
-                cout << "[4]. Burger + Fries + Drink - 78" << endl;
-                cout << "[5]. Halo-Halo - 75" << endl;
+                cout<<"[1]. "<<menu[0]<<endl;
+                cout<<"[2]. "<<menu[1]<<endl;
+                cout<<"[3]. "<<menu[2]<<endl;
+                cout<<"[4]. "<<menu[3]<<endl;
+                cout<<"[5]. "<<menu[4]<<endl;
                 cout << "What is your Order?: ";
                 cin >> order[i][j][0];
+
     
                 if (order[i][j][0] >= 1 && order[i][j][0] <= 5) {
                     cout << "Quantity: ";
@@ -55,11 +56,11 @@ int main() {
                 cout << "Insufficient payment! You still owe " << totalPrice - paid << endl;
             }
         }
+        
         cout << "Change: " << paid - totalPrice << endl;
         cout << "Thank you, Customer " << i + 1 << "!\n";
     }
-
-
+    
         cout << "\n\n===== FINAL RECEIPT =====" << endl;
 
         for (int i = 0; i < customer; i++) {
@@ -70,14 +71,17 @@ int main() {
 
             for (int j = 0; j < numOrdersArr[i]; j++) {
                 int itemIndex = order[i][j][0] - 1;
-                cout << menu[itemIndex] << " x" << order[i][j][1]
-                     << " = " << order[i][j][2] << endl;
+                cout << menu[itemIndex] << " x" << order[i][j][1]<<endl;
+                cout << " = " << order[i][j][2] << endl;
                 customerTotal += order[i][j][2];
             }
-
+            
             cout << "----------------------------------------" << endl;
             cout << "Total: " << customerTotal << endl;
+            cout<<  "Amount You paid: "<<payment<<endl;
+            cout << "Change: " << paid - totalPrice << endl;
         }
+        
 
     return 0;
 }
