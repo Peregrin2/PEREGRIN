@@ -1,20 +1,27 @@
 #include <iostream>
 #include <conio.h>
 #include <windows.h>
+#include <fstream>
+#include <vector>
 using namespace std;
 
+//WALA PANG TRANSACTION HISTORY TO
 
+
+// Function prototypes
 void pinVerification();
+void displayBank();
 void displayMenu();
 void checkBalance();
 void depositMoney();
 void withdrawMoney();
-void exitATM();
 
+void exitATM();
+bool transacChoice();
 
 int balance = 1000;
 
-
+// ---------------- PIN ----------------
 void pinVerification() {
     int attempts = 0;
     const string correctPIN = "1234";
@@ -25,14 +32,11 @@ void pinVerification() {
 
         cout << "Please enter your \033[32mPIN: \033[0m";
 
-       
         while (true) {
             ch = _getch();
 
-            if (ch == 13) {  
-                break;
-            }
-            else if (ch == 8 && !enteredPIN.empty()) { 
+            if (ch == 13) break;
+            else if (ch == 8 && !enteredPIN.empty()) {
                 enteredPIN.pop_back();
                 cout << "\b \b";
             }
@@ -41,27 +45,21 @@ void pinVerification() {
                 cout << "*";
             }
         }
-
         cout << endl;
 
-
-        if (enteredPIN == correctPIN) {
-            
-            return;
-        }
-        else {
-            attempts++;
-            cout << "\033[31mIncorrect PIN. Attempts remaining: " << (3 - attempts) << "\033[0m\n";
-        }
+        if (enteredPIN == correctPIN) return;
+        attempts++;
+        cout << "\033[31mIncorrect PIN. Attempts remaining: "
+            << (3 - attempts) << "\033[0m\n";
     }
-	cout << endl;
-    cout << "\033[31mMaximum attempts reached. Access denied.\033[0m\n";
-	system("pause");
-	exit(0);
+
+    cout << "\033[31mAccess denied.\033[0m\n";
+    system("pause");
+    exit(0);
 }
 
-
-void displayMenu() {
+// ---------------- UI ----------------
+void displayBank() {
     cout << "\033[36m---------------------------------------------------------------------------------------------------------------------\n";
     cout << "\033[33m";
     cout << "                                  ____              _      _____     _ _           \n";
@@ -71,13 +69,19 @@ void displayMenu() {
     cout << "                                 | |_) | (_| | | | |   <   _| ||  __/ | |  __/ |   \n";
     cout << "                                 |____/ \\__,_|_| |_|_|\\_\\  \\___/ \\___|_|_|\\___|_|   \n";
     cout << "\033[36m---------------------------------------------------------------------------------------------------------------------\n\033[0m";
-    cout << "\33[31m" << "==========================================\33[0m \033[32m SIMPLE TRANSACTION ONLY \033[0m \33[31m================================================\33[0m\n";
+    cout << "\33[31m==========================================\33[0m \033[32m SIMPLE TRANSACTION ONLY \033[0m \33[31m================================================\33[0m\n";
+}
 
+// ---------------- MENU ----------------
+void displayMenu() {
     int choice;
+    bool running = true;
 
-    while (true) {
-        cout << "\n";
-        cout << "1. Check Balance\n";
+    while (running) {
+        system("cls");
+        displayBank();
+
+        cout << "\n1. Check Balance\n";
         cout << "2. Deposit Money\n";
         cout << "3. Withdraw Money\n";
         cout << "4. Exit\n";
@@ -85,69 +89,73 @@ void displayMenu() {
         cin >> choice;
 
         switch (choice) {
-        case 1: checkBalance(); break;
-        case 2: depositMoney(); break;
-        case 3: withdrawMoney(); break;
+        case 1: checkBalance(); running = transacChoice(); break;
+        case 2: depositMoney(); running = transacChoice(); break;
+        case 3: withdrawMoney(); running = transacChoice(); break;
         case 4: exitATM(); return;
         default:
             cout << "Invalid choice!\n";
+            Sleep(1000);
         }
     }
 }
 
+// ---------------- TRANSACTIONS ----------------
 void checkBalance() {
-    cout << "\nCurrent Balance: " << balance << endl;
+    system("cls");
+    displayBank();
+    cout << "\nCurrent Balance:" << " \033[32m"<< balance << "\033[0m" << endl;
 }
 
+// Deposit money
 void depositMoney() {
+    system("cls");
+    displayBank();
     int amount;
-    cout << "Enter amount to deposit: ";
+    cout << "Enter \033[32mAmount\033[0m to deposit: ";
     cin >> amount;
 
     if (amount > 0) {
         balance += amount;
+        history.push_back({ "Withdraw", amt, balance });
+        saveToFile("Withdraw", amt, balance);
         cout << "Deposit successful.\n";
     }
-    else {
-        cout << "Invalid amount.\n";
-    }
+    else cout << "Invalid amount.\n";
 }
 
+// Withdraw money
 void withdrawMoney() {
+    system("cls");
+    displayBank();
     int amount;
-    cout << "Enter amount to withdraw: ";
+    cout << "Enter \033[32mAmount\033[0m to Withdraw: ";
     cin >> amount;
 
-    if (amount > balance) {
-        cout << "Insufficient funds!\n";
-    }
-    else if (amount <= 0) {
-        cout << "Invalid amount!\n";
-    }
+    if (amount > balance) cout << "Insufficient funds!\n";
+    else if (amount <= 0) cout << "Invalid amount!\n";
     else {
         balance -= amount;
         cout << "Withdrawal successful.\n";
     }
 }
+// Transaction choice
+bool transacChoice() {
+    char choice;
+    cout << "\nMake Another Transaction? [Y/N]: ";
+    cin >> choice;
+
+    return (choice == 'Y' || choice == 'y');
+}
 
 void exitATM() {
     cout << "\nThank you for using the ATM. Goodbye!\n";
-    Sleep(2000);
+    Sleep(1000);
 }
 
+// ---------------- MAIN ----------------
 int main() {
-
-    cout << "\033[36m---------------------------------------------------------------------------------------------------------------------\n";
-    cout << "\033[33m";
-    cout << "                                  ____              _      _____     _ _           \n";
-    cout << "                                 |  _ \\            | |    |_   _|   | | |          \n";
-    cout << "                                 | |_) | __ _ _ __ | | __   | |  ___| | | ___ _ __ \n";
-    cout << "                                 |  _ < / _` | '_ \\| |/ /   | | / _ \\ | |/ _ \\ '__|\n";
-    cout << "                                 | |_) | (_| | | | |   <   _| ||  __/ | |  __/ |   \n";
-    cout << "                                 |____/ \\__,_|_| |_|_|\\_\\  \\___/ \\___|_|_|\\___|_|   \n";
-    cout << "\033[36m---------------------------------------------------------------------------------------------------------------------\n\033[0m";
-    cout << "\33[31m" << "==========================================\33[0m \033[32m SIMPLE TRANSACTION ONLY \033[0m \33[31m================================================\33[0m\n";
-
+    displayBank();
     pinVerification();
 
     cout << "Checking";
@@ -155,8 +163,6 @@ int main() {
     Sleep(500); cout << ".";
     Sleep(500); cout << ".\n";
     Sleep(1000);
-
-    system("cls");
 
     displayMenu();
     return 0;
