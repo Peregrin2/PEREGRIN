@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <fstream>
 #include <vector>
+#include <string>
 using namespace std;
 
 //WALA PANG TRANSACTION HISTORY TO
@@ -15,7 +16,7 @@ void displayMenu();
 void checkBalance();
 void depositMoney();
 void withdrawMoney();
-
+void transactionview();
 void exitATM();
 bool transacChoice();
 
@@ -84,7 +85,9 @@ void displayMenu() {
         cout << "\n1. Check Balance\n";
         cout << "2. Deposit Money\n";
         cout << "3. Withdraw Money\n";
-        cout << "4. Exit\n";
+		cout << "4. View Transaction History\n";
+        cout << "5. Exit\n";
+        
         cout << "Enter choice: ";
         cin >> choice;
 
@@ -92,7 +95,8 @@ void displayMenu() {
         case 1: checkBalance(); running = transacChoice(); break;
         case 2: depositMoney(); running = transacChoice(); break;
         case 3: withdrawMoney(); running = transacChoice(); break;
-        case 4: exitATM(); return;
+		case 4: transactionview(); running = transacChoice(); break;
+        case 5: exitATM(); return;
         default:
             cout << "Invalid choice!\n";
             Sleep(1000);
@@ -104,7 +108,7 @@ void displayMenu() {
 void checkBalance() {
     system("cls");
     displayBank();
-    cout << "\nCurrent Balance:" << " \033[32m"<< balance << "\033[0m" << endl;
+    cout << "\nCurrent Balance:" << " \033[32m" << balance << "\033[0m" << endl;
 }
 
 // Deposit money
@@ -112,14 +116,29 @@ void depositMoney() {
     system("cls");
     displayBank();
     int amount;
+	fstream file;
+
+    file.open("balance.txt", ios::out);
+
+
+    if (!file) {
+        cout << "Error in creating file!!!" << endl;
+        return;
+    }
+
+
     cout << "Enter \033[32mAmount\033[0m to deposit: ";
     cin >> amount;
+	file.close();
+
+
+	
+
+	
 
     if (amount > 0) {
-        balance += amount;
-        history.push_back({ "Withdraw", amt, balance });
-        saveToFile("Withdraw", amt, balance);
         cout << "Deposit successful.\n";
+
     }
     else cout << "Invalid amount.\n";
 }
@@ -146,6 +165,26 @@ bool transacChoice() {
     cin >> choice;
 
     return (choice == 'Y' || choice == 'y');
+}
+
+void transactionview() {
+
+	string line;
+
+	fstream file;
+	
+    file.open("balance.txt", ios::in);
+
+	cout << "Transaction History: \n";
+
+    while (getline(file, line)) {
+
+		cout << line << endl;
+
+    }
+
+	file.close();
+    
 }
 
 void exitATM() {
