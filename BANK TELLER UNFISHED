@@ -1,3 +1,7 @@
+//PWET
+
+
+
 #include <iostream>
 #include <conio.h>
 #include <windows.h>
@@ -6,7 +10,7 @@
 #include <string>
 using namespace std;
 
-//WALA PANG TRANSACTION HISTORY TO
+
 
 
 // Function prototypes
@@ -17,6 +21,7 @@ void checkBalance();
 void depositMoney();
 void withdrawMoney();
 void transactionview();
+void saveTransaction(string type, int amount, int newBalance);
 void exitATM();
 bool transacChoice();
 
@@ -85,9 +90,9 @@ void displayMenu() {
         cout << "\n1. Check Balance\n";
         cout << "2. Deposit Money\n";
         cout << "3. Withdraw Money\n";
-		cout << "4. View Transaction History\n";
+        cout << "4. View Transaction History\n";
         cout << "5. Exit\n";
-        
+
         cout << "Enter choice: ";
         cin >> choice;
 
@@ -95,7 +100,7 @@ void displayMenu() {
         case 1: checkBalance(); running = transacChoice(); break;
         case 2: depositMoney(); running = transacChoice(); break;
         case 3: withdrawMoney(); running = transacChoice(); break;
-		case 4: transactionview(); running = transacChoice(); break;
+        case 4: transactionview(); running = transacChoice(); break;
         case 5: exitATM(); return;
         default:
             cout << "Invalid choice!\n";
@@ -116,29 +121,14 @@ void depositMoney() {
     system("cls");
     displayBank();
     int amount;
-	fstream file;
-
-    file.open("balance.txt", ios::out);
-
-
-    if (!file) {
-        cout << "Error in creating file!!!" << endl;
-        return;
-    }
-
 
     cout << "Enter \033[32mAmount\033[0m to deposit: ";
     cin >> amount;
-	file.close();
-
-
-	
-
-	
 
     if (amount > 0) {
+        balance += amount;
         cout << "Deposit successful.\n";
-
+        saveTransaction("Deposit", amount, balance);
     }
     else cout << "Invalid amount.\n";
 }
@@ -156,8 +146,31 @@ void withdrawMoney() {
     else {
         balance -= amount;
         cout << "Withdrawal successful.\n";
+        saveTransaction("Withdraw", amount, balance);
     }
 }
+
+// Transaction History View
+void transactionview() {
+    system("cls");
+    displayBank();
+
+    fstream file("balance.txt", ios::in);
+
+    if (!file) {
+        cout << "\nNo transaction history found.\n";
+        return;
+    }
+
+    cout << "\n=== Transaction History ===\n";
+    string line;
+    while (getline(file, line)) {
+        cout << line << endl;
+    }
+
+    file.close();
+}
+
 // Transaction choice
 bool transacChoice() {
     char choice;
@@ -167,24 +180,20 @@ bool transacChoice() {
     return (choice == 'Y' || choice == 'y');
 }
 
-void transactionview() {
+// Save transaction
+void saveTransaction(string type, int amount, int newBalance) {
+    fstream file;
+    file.open("balance.txt", ios::app);
 
-	string line;
-
-	fstream file;
-	
-    file.open("balance.txt", ios::in);
-
-	cout << "Transaction History: \n";
-
-    while (getline(file, line)) {
-
-		cout << line << endl;
-
+    if (!file) {
+        cout << "Error opening transaction file!\n";
+        return;
     }
 
-	file.close();
-    
+    file << type << ": " << amount
+        << " | Remaining Balance: " << newBalance << endl;
+
+    file.close();
 }
 
 void exitATM() {
