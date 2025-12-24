@@ -1,0 +1,71 @@
+#include <iostream>
+using namespace std;
+
+class myProduct {
+
+private:
+    int id;
+    string name;
+    double price;
+
+    
+public:
+
+    myProduct() {
+    
+    }
+
+    myProduct(int pid, string pname, double pprice) {
+        id = pid;
+        name = pname;
+        price = pprice;
+    }
+
+    void display() {
+        cout << "Player ID: " << id << endl;
+        cout << "Player Name: " << name << endl;
+		cout << "Player Price: " << price << endl;
+
+    }
+
+    void UpdatePrice(double newPrice) {
+        price = newPrice;
+	}
+
+};
+
+
+int main() {
+    myProduct Product[2];
+    int idy;
+	string namey;
+	double pricey;
+
+    for (int i = 0; i < 2; i++) {
+		cout << "Player " << i + 1 << endl;
+		cout << "Enter Product ID: ";    
+		cin >> idy;
+		cout << "Enter Product Name: ";
+		cin >> namey;
+		cout << "Enter Product Price: ";
+        cin >> pricey;
+        Product[i] = myProduct(idy, namey, pricey);
+		system("cls");
+          
+        
+    }
+   
+    cout << "=========== PRODUCT LIST ===========" << endl;
+    for (int i = 0; i < 2; i++) {
+        cout << "Product " << i + 1 << endl;
+        Product[i].display();
+        cout << "==================================" << endl;
+    }
+    
+    return 0;
+}
+
+
+
+
+
