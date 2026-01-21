@@ -1,0 +1,145 @@
+#include <iostream>
+#include <conio.h>
+using namespace std;
+
+struct prelimgrade {
+    string login;
+    string password;
+    string name;
+    int age;
+
+}student1, student2;
+
+
+string getmaskpassword() {
+    string password = "";
+    char ch;
+
+    while (true) {
+        ch = _getch();
+
+        // ENTER key → finish input
+        if (ch == 13) {
+            cout << endl;
+            break;
+        }
+
+        // BACKSPACE key
+        if (ch == 8 && password.length() > 0) {
+            cout << "\b \b"; // erase * from screen
+            password.pop_back(); // remove last character from password
+            continue;
+        }
+
+        // normal character
+        if (ch != 8) {
+            password.push_back(ch);
+            cout << '*';
+        }
+    }
+
+    return password;
+}
+
+
+
+int main() {
+    student1.login = "Jaypeeperegrin";
+    student1.password = "peregrin";
+    student1.name = "Jaypee";
+    student1.age = 18;
+
+    student2.login = "Jairaboaquin";
+    student2.password = "boaquin";
+    student2.name = "Jaira";
+    student2.age = 19;
+
+    int attemps = 0;
+	string username, password;
+	
+    cout << ">>== Please Login Your Account First ==<<" << endl;
+    while (attemps < 3) {
+        
+        
+        cout << "Name: ";
+        cin >> username;
+
+        cout << "Password: ";
+		password = getmaskpassword();
+
+        if (username == student1.login && password == student1.password ) {
+
+			int g1,g2,g3,g4,g5,g6,g7;
+            int prelimgrade;
+            cout << "Welcome " << student1.name << " !" << endl;;
+			cout << "Please proceed to the Prelim Grade System." << endl;
+            cout << "Enter Your Grade: " << endl;
+            cout << "Fundamentals of Programming 1: ";
+			cin >> g1;
+            cout << "Fundamentals of Programming 2: ";
+			cin >> g2;
+			cout << "Introduction To Computing: ";
+            cin >> g3;
+            cout << "Intermidiate Programming 1: ";
+			cin >> g4;
+			cout << "Intermidiate Programming 2: ";
+			cin >> g5;
+			cout << "Network Communication 1: ";
+			cin >> g6;
+			cout << "Network Communication 2: ";
+			cin >> g7;
+
+
+			prelimgrade = (g1 + g2 + g3 + g4 + g5 + g6 + g7) / 7;
+			cout << student1.name <<" Your Prelim Grade is: " << prelimgrade << endl;
+
+			return 0;
+		}
+        else if (username == student2.login && password == student2.password) {
+            int g1,g2,g3,g4,g5,g6,g7;
+            int prelimgrade;
+			cout << "Welcome "<<student2.name <<" !" << endl;
+            cout << "Please proceed to the Prelim Grade System." << endl;
+            cout << "Enter Your Grade: " << endl;
+            cout << "Fundamentals of Programming 1: ";
+            cin >> g1;
+            cout << "Fundamentals of Programming 2: ";
+            cin >> g2;
+            cout << "Introduction To Computing: ";
+            cin >> g3;
+            cout << "Intermidiate Programming 1: ";
+            cin >> g4;
+            cout << "Intermidiate Programming 2: ";
+            cin >> g5;
+            cout << "Network Communication 1: ";
+            cin >> g6;
+            cout << "Network Communication 2: ";
+            cin >> g7;
+
+
+            prelimgrade = (g1 + g2 + g3 + g4 + g5 + g6 + g7) / 7;
+           
+            cout << student2.name << " Your Prelim Grade is: " << prelimgrade << endl;
+			return 0;
+        }
+        else {
+			attemps++;
+            cout << "Incorrect Username or Password Please try again. Attemps left: " << (3 - attemps) <<endl;
+
+        }
+
+    }
+
+	cout << "Access Denied. Too many attempts." << endl;
+
+
+
+
+
+
+
+    //meron patong mga kulang tinamad lang akong gawin hehe
+
+
+}
+
