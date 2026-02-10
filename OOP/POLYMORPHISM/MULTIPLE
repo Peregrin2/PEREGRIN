@@ -1,0 +1,78 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Employee {
+protected:
+    int id;
+    string name;
+
+public:
+    Employee(int id, string name) : id(id), name(name) {}
+
+    virtual double calculateSalary() = 0;
+
+    virtual void display() {
+        cout << "ID: " << id << endl;
+        cout << "Name: " << name << endl;
+    }
+
+    virtual ~Employee() {}
+};
+
+class Manager : virtual public Employee {
+protected:
+    double bonus;
+
+public:
+    Manager(int id, string name, double bonus)
+        : Employee(id, name), bonus(bonus) {}
+
+    double calculateSalary() override {
+        return bonus;
+    }
+};
+
+class Programmer : virtual public Employee {
+protected:
+    double overtimePay;
+
+public:
+    Programmer(int id, string name, double overtimePay)
+        : Employee(id, name), overtimePay(overtimePay) {}
+
+    double calculateSalary() override {
+        return overtimePay;
+    }
+};
+
+class TechLead : public Manager, public Programmer {
+private:
+    double baseSalary;
+
+public:
+    TechLead(int id, string name, double baseSalary, double bonus, double overtimePay)
+        : Employee(id, name),
+          Manager(id, name, bonus),
+          Programmer(id, name, overtimePay),
+          baseSalary(baseSalary) {}
+
+    double calculateSalary() override {
+        return baseSalary + bonus + overtimePay;
+    }
+
+    void display() override {
+        Employee::display();
+        cout << "Role: TechLead" << endl;
+    }
+};
+
+int main() {
+    Employee* emp = new TechLead(202, "Jaypee", 50000, 10000, 8000);
+
+    emp->display();
+    cout << "Total Salary: " << emp->calculateSalary() << endl;
+
+    delete emp;
+    return 0;
+}
