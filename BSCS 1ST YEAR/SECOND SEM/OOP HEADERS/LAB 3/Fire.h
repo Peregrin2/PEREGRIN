@@ -2,7 +2,7 @@
 #define FIRE_H
 using namespace std;
 
-
+ 
 class Fire : public Element{
 public:
 
