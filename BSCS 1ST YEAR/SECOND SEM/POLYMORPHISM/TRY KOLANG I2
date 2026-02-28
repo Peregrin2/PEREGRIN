@@ -1,0 +1,106 @@
+#include <iostream>
+using namespace std;
+
+class Father{
+protected:
+int age;
+float balance;
+string Fullname;
+
+public:
+
+
+    Father(int age, float balance, string Fullname){
+        this->age = age;
+        this->balance = balance;
+        this->Fullname = Fullname;
+    }
+
+   virtual void display(){
+    cout<<"===========================================\n";
+        cout<<"Father's Fullname: "<<Fullname<<endl;
+        cout<<"Age: "<<age<<endl;
+        cout<<"Father's Balance: "<<balance<<endl;
+    cout<<"===========================================\n";
+    }
+};
+
+
+
+class Son: public Father{
+protected:
+int sonAge;
+string sonFullname;
+float sonBalance;
+
+public:
+
+    Son(int sonAge,string sonFullname,float sonBalance, int age,float balance,string Fullname)
+    :Father(age,balance,Fullname){
+        this->sonAge = sonAge;
+        this->sonFullname = sonFullname;
+        this->sonBalance = sonBalance;
+    }
+
+    void display() override{
+        Father::display();
+
+        cout<<"Son's Fullname: "<<sonFullname<<endl;
+        cout<<"Age: "<<sonAge<<endl;
+        cout<<"Son's Balance: "<<sonBalance<<endl;
+        cout<<"===========================================\n";
+    }
+};
+
+
+int main() {
+    /*
+
+
+    int fAge, sAge;
+    float fBalance, sBalance;
+    string fName, sName;
+
+    cout << "Enter Father's Fullname: ";
+    getline(cin, fName);
+
+    cout << "Enter Father's Age: ";
+    cin >> fAge;
+
+    cout << "Enter Father's Balance: ";
+    cin >> fBalance;
+
+    cin.ignore(); 
+
+    cout << "\nEnter Son's Fullname: ";
+    getline(cin, sName);
+
+    cout << "Enter Son's Age: ";
+    cin >> sAge;
+
+    cout << "Enter Son's Balance: ";
+    cin >> sBalance;
+
+    // POLYMORPHISM
+    Father* Family = new Son(sAge,sName,sBalance,fAge,fBalance,fName);
+    Family->display();
+
+    delete Family;
+
+
+
+    */
+
+    Father* Family = new Son(
+
+        19,"jAYPEEEEEEE",20000, // Son info: age, name, balance
+        18,10000,"jAYPEE" // Father info: age, balance, name
+
+    );
+
+    Family->display();
+
+    delete Family;
+
+    return 0;
+}
