@@ -1,0 +1,120 @@
+#include <iostream>
+using namespace std;
+
+struct Snode{
+	int data;
+	Snode* prev;
+	Snode* next;
+};
+
+struct Dnode {
+	int data;
+	Dnode* prev;
+	Dnode* next;
+};
+
+struct Cnode {
+	int data;
+	Cnode* next;
+};
+
+int main()
+{
+	// Singly Linked List
+	Snode* head		 = new Snode{ 10, nullptr, nullptr };
+	Snode* second	 = new Snode{ 20, head, nullptr };
+	head-> next		 = second;
+	Snode* third	 = new Snode{ 30, second, nullptr };
+	second->next	 = third;
+	Snode* fourth	 = new Snode{ 40, third, nullptr };
+	third->next		 = fourth;
+	Snode* fifth	 = new Snode{ 50, fourth, nullptr };
+	fourth->next		 = fifth;
+
+
+	Snode* temp = head;
+	cout << "==================================================================================================\n\n";
+	cout << "SINGLY LINKED LIST: \n";
+	while (temp) {
+		cout << temp->data << " -> ";
+		temp = temp->next;
+
+		if (!temp) {
+			cout << "NULL\n";
+		}
+	}
+	cout << "\n==================================================================================================\n\n";
+
+
+
+
+
+	// Doubly Linked List
+	Dnode* head1		 = new Dnode{ 10, nullptr, nullptr };
+	Dnode* second1		 = new Dnode{ 20, head1, nullptr };
+	head1-> next		 = second1;
+	Dnode* third1		 = new Dnode{ 30, second1, nullptr };
+	second1->next		 = third1;
+	Dnode* fourth1		 = new Dnode{ 40, third1, nullptr };
+	third1->next		 = fourth1;
+	Dnode* fifth1		 = new Dnode{ 50, fourth1, nullptr };
+	fourth1->next		 = fifth1;
+
+
+	Dnode* temp1 = head1;
+	
+	cout << "DOUBLY LINKED LIST: \n";
+	cout << "\nFORWARD: ";
+	while (temp1) {
+		cout << temp1->data << " -> ";
+		temp1 = temp1->next;
+
+		if (!temp1) {
+			cout << "NULL\n";
+		}
+	}
+	
+	cout << "\nBACKWARD: ";
+	temp1 = fifth1;
+	while (temp1) {
+		cout << temp1->data << " <- ";
+		temp1 = temp1->prev;
+
+		if (!temp1) {
+			cout << "NULL\n";
+		}
+	}
+	cout << "\n==================================================================================================\n\n";
+
+
+	// Circular Linked List
+	Cnode* head2	 = new Cnode{ 100, nullptr };
+	Cnode* second2	 = new Cnode{ 200, nullptr };
+
+	Cnode* third2	 = new Cnode{ 300, nullptr };
+
+	Cnode* fourth2	 = new Cnode{ 400, nullptr };
+
+	Cnode* fifth2	 = new Cnode{ 500, nullptr };
+
+	head2->next		 = second2;
+	second2->next	 = third2;
+	third2->next	 = fourth2;
+	fourth2->next	 = head2;
+
+	Cnode* temp2 = head2;
+
+	cout << "CIRCULAR LINKED LIST: \n";
+	cout << "Circle (2 Laps): ";
+	for(int i = 0; i < 9; i++) {
+		cout << temp2->data << " -> ";
+		temp2 = temp2->next;
+		
+		
+	} 
+	cout << "(Finished Line)\n";
+	cout << "\n==================================================================================================\n\n";
+	
+	return 0;
+}
+   
