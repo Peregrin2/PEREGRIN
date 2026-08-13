@@ -11,7 +11,7 @@ int main() {
         system("cls");
 
         while (true) {
-            // 🔴 RED LIGHT
+            //  RED LIGHT
             cout << "\033[31mRED LIGHT!\033[0m" << endl;
             this_thread::sleep_for(chrono::seconds(1));
             system("cls");
@@ -22,7 +22,7 @@ int main() {
                 system("cls");
             }
 
-            // 🟢 GREEN LIGHT
+            //  GREEN LIGHT
             cout << "\033[32mGO!\033[0m" << endl;
             this_thread::sleep_for(chrono::seconds(1));
             system("cls");
@@ -33,7 +33,7 @@ int main() {
                 system("cls");
             }
 
-            // 🟡 YELLOW LIGHT
+            //  YELLOW LIGHT
             cout << "\033[33mSLOW DOWN!\033[0m" << endl;
             this_thread::sleep_for(chrono::seconds(1));
             system("cls");
